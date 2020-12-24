@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block panel %}
+    <h1>Add Task</h1>
+{% endblock panel %}
+    
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="task">New Task</label>
+        {{ form.task|append_attr:"class:form-control"|append_attr:"placeholder:New Task" }}
+    </div>
+    <div class="form-group">
+        <label for="task">Note</label>
+        {{form.note|append_attr:"class:form-control"|append_attr:"placeholder:Note" }}
+    </div>
+    <div class="form-group">
+        <label for="task">Deadline</label>
+        {{ form.deadline|append_attr:"class:form-control" }}
+    </div>
+    <div class="form-check">
+        {{ form.complete|append_attr:"class:form-check-input"}}
+        <label class="form-check-label">Complete?</label>
+    </div>
+    <!-- <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock content %}

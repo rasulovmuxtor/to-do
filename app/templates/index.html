@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Todo: {{tasks.first.user}} 
+{% endblock title %}
+
+{% block panel %}
+    <h1>Tasks</h1>
+{% endblock panel %}
+ 
+ {% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Task</th>
+        <th>Deadline</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for task in tasks %}
+            
+            {% if task.delta %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{task.task}}</td>
+                <td style="white-space: nowrap;">{{task.deadline|date:"d-M-Y H:s"}}</td>
+                <td style="white-space: nowrap;">{{task.delta}}</td>
+                <td style="white-space: nowrap;">
+                
+                {% if task.complete %}
+                    Completed
+                {% else %}
+                    Pending
+                {% endif %}
+                    
+                </td>
+                <td style="white-space: nowrap;float: right;">
+                    <a class="btn btn-sm btn-outline-info" href="{%url 'update' task.id %}">Update</a>
+                    <a class="btn btn-sm btn-outline-danger" href="{%url 'delete' task.id %}">Delete</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{task.task}}</td>
+                <td style="white-space: nowrap;">{{task.deadline|date:"d-M-Y H:s"}}</td>
+                <td style="white-space: nowrap;"><strike>End</strike></td>
+                <td style="color: red;white-space: nowrap;">Time out</td>
+                <td style="white-space: nowrap;float: right;">
+                    <!-- <a class="btn btn-sm btn-outline-info disabled" href="">Update</a> -->
+                    <a class="btn btn-sm btn-outline-danger"  href="{%url 'delete' task.id %}">Delete</a>
+                </td>
+            </tr>
+            {% endif %}
+                
+
+        {% endfor %}
+    </tbody>
+</table>    
+ {% endblock content %}
+        
